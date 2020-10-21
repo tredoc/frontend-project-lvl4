@@ -1,35 +1,58 @@
 // @ts-check
 import React from 'react'
 import ReactDOM from 'react-dom'
-
+import App from './app'
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-
 import '../assets/application.scss';
 
-// import faker from 'faker';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { Provider } from 'react-redux'
+import rootReducer from './reducers';
+import io from 'socket.io-client';
+
+const middleware = getDefaultMiddleware({
+  immutableCheck: false,
+  serializableCheck: false,
+  thunk: true,
+});
+
 import gon from 'gon';
+
+const initialState = {
+  channels: gon.channels,
+  currentChannelId: gon.currentChannelId,
+  messages: gon.messages
+}
+
+const store = configureStore({
+ reducer: rootReducer,
+ middleware,
+ devTools: process.env.NODE_ENV !== 'production',
+ preloadedState: initialState
+});
+
+// import faker from 'faker';
 // import cookies from 'js-cookie';
-// import io from 'socket.io-client';
+
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
-console.log('it works!');
 console.log('gon', gon);
 
-class App extends React.Component {
-  state = this.props.gon
+const socket = io()
 
-  render() {
-    const channels = this.state.channels.map(c => <li key={c.id}>{c.name}</li>)
-    return (
-      <ul> 
-        {channels}
-      </ul>
-    )
-  }
-}
+socket.on('connect', () => console.log('connected to socket!!!'));
+socket.on('newMessage', ({ data: {attributes}}) => store.dispatch({ type: 'ADD_MESSAGE', payload: attributes}))
+socket.on('newChannel', ({ data: {attributes}}) => store.dispatch({ type: 'ADD_CHANNEL', payload: attributes}))
+socket.on('removeChannel', ({data: { id }}) => store.dispatch({ type: 'REMOVE_CHANNEL', payload: id}))
+socket.on('renameChannel', ({data: { attributes }}) => store.dispatch({ type: 'RENAME_CHANNEL', payload: attributes}))
 
-ReactDOM.render(<App gon={gon} />, document.getElementById('chat'))
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('chat')
+ )
