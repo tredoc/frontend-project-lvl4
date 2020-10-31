@@ -1,14 +1,12 @@
-import React from 'react'
-import Messages from './Messages'
-import SendMessage from './SendMessage'
+import React from 'react';
+import Messages from './Messages';
+import SendMessage from './SendMessage';
 
-const Chat = () => {
-    return (
-        <div className="message-window col h-100 border-right d-flex flex-column justify-content-between">
-            <Messages />
-            <SendMessage />
-        </div>   
-    )
-}
+const Chat = () => (
+  <div className="message-window col h-100 border-right d-flex flex-column justify-content-between">
+    <Messages />
+    <SendMessage />
+  </div>
+);
 
-export default Chat
+export default Chat;

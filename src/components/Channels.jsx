@@ -1,81 +1,90 @@
-import React, { Fragment } from 'react'
-import {connect} from 'react-redux'
-import cn from 'classnames'
-import _ from 'lodash'
+/* eslint react/prop-types: 0 */
+import React from 'react';
+import { connect } from 'react-redux';
 
-import { showModal } from '../slices/uiSlice'
+import { ButtonGroup, Dropdown, Button } from 'react-bootstrap';
+import { selectChannel, showModal } from '../slices';
 
-import { selectChannel } from '../slices/channelsSlice'
-import { ButtonGroup, Dropdown, Button } from 'react-bootstrap'
+const mapStateToProps = ({ channels, ui }) => {
+  const props = {
+    channelsList: channels.channelsList,
+    channelId: channels.channelId,
+    showModal: ui.showModal,
+  };
+  return props;
+};
 
-const mapStateToProps = (state) => {
-    const props = {
-        channelsList: state.channels.channelsList,
-        channelId: state.channels.channelId,
-        showModal: state.ui.showModal
-    }
-    return props
-}
+const Channel = (props) => {
+  const { channelId, channelData, dispatch } = props;
+  const { id, name, removable } = channelData;
+
+  const chatSelectHandler = (selectedChannelId) => {
+    dispatch(selectChannel(selectedChannelId));
+  };
+  const renameHandler = (selectedChannelId) => {
+    dispatch(showModal({ modalType: 'renaming', extra: selectedChannelId }));
+  };
+  const deleteHandler = (selectedChannelId) => {
+    dispatch(showModal({ modalType: 'removing', extra: selectedChannelId }));
+  };
+
+  const variant = id === channelId ? 'primary' : 'light';
+
+  if (!removable) {
+    return (
+      <li className="w-100">
+        <Button
+          onClick={() => chatSelectHandler(id)}
+          className="w-100 mb-1 text-left"
+          variant={variant}
+        >
+          {name}
+        </Button>
+      </li>
+    );
+  }
+  return (
+    <li className="w-100">
+      <Dropdown as={ButtonGroup} className="mb-1 w-100">
+        <Button onClick={() => chatSelectHandler(id)} className="w-100 text-left" variant={variant}>{name}</Button>
+
+        <Dropdown.Toggle split variant="light" id="dropdown-split-basic" />
+        <Dropdown.Menu>
+          <Dropdown.Item onClick={() => renameHandler(id)}>Rename</Dropdown.Item>
+          <Dropdown.Item onClick={() => deleteHandler(id)}>Delete</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+    </li>
+  );
+};
 
 const Channels = (props) => {
-    const { dispatch, channelId, channelsList } = props
-    
-    const chatSelectHandler = (id) => {
-        dispatch(selectChannel(id))
-    }
+  const { dispatch, channelId, channelsList } = props;
 
-    const addChannelHandler = () => {
-        dispatch(showModal({modalType: 'adding'}))
-    }
-    
-    const renameHandler = (id) => {
-        dispatch(showModal({modalType: 'renaming', extra: id}))
-    }
+  const addChannelHandler = () => {
+    dispatch(showModal({ modalType: 'adding' }));
+  };
 
-    const deleteHandler = (id) => {
-        dispatch(showModal({modalType: 'removing', extra: id}))
-    } 
+  const channels = channelsList.map((channel) => (
+    <Channel
+      channelData={channel}
+      channelId={channelId}
+      dispatch={dispatch}
+      key={channel.id}
+    />
+  ));
 
-    const channels = channelsList.map(c => {
-        if (!c.removable) {
-            return (
-                <li key={c.id} className="w-100"> 
-                    <Button 
-                        onClick={() => chatSelectHandler(c.id)} 
-                        className="w-100 mb-1" 
-                        variant={c.id === channelId ? 'primary' : 'light'}>
-                            {c.name}
-                    </Button>
-                </li>
-            )
-        } 
-        return (   
-            <li key={c.id} className="w-100"> 
-                <Dropdown as={ButtonGroup} className="mb-1 w-100">
-                <Button onClick={() => chatSelectHandler(c.id)} className="w-100" variant={c.id === channelId ? 'primary' : 'light'}>{c.name}</Button>
-                
-                <Dropdown.Toggle split variant="light" id="dropdown-split-basic"/>
-                    <Dropdown.Menu>
-                        <Dropdown.Item onClick={() => renameHandler(c.id)}>Rename</Dropdown.Item>
-                        <Dropdown.Item onClick={() => deleteHandler(c.id)}>Delete</Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
-            </li>
-        ) 
-    })
+  return (
+    <div className="mr-3 col-3 border-right">
+      <div className="d-flex justify-content-between">
+        <h3>Channels</h3>
+        <button type="button" onClick={addChannelHandler} className="btn btn-link">+</button>
+      </div>
+      <ul className="nav flex-column">
+        {channels}
+      </ul>
+    </div>
+  );
+};
 
-    return (
-        <div className="mr-3 col-3 border-right">
-            <div className="d-flex justify-content-between">
-                <h3>Channels</h3>
-                <button onClick={addChannelHandler} className="btn btn-link">+</button>
-            </div>
-
-            <ul className="nav flex-column">
-                {channels}
-            </ul>
-        </div>
-    )
-}
-
-export default connect(mapStateToProps)(Channels)
+export default connect(mapStateToProps)(Channels);

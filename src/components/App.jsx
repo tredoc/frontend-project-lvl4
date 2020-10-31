@@ -1,34 +1,30 @@
-import React from 'react'
-import Channels from './Channels'
-import Chat from './Chat'
-import { connect } from 'react-redux'
-import getModal from '../modals'
+/* eslint react/prop-types: 0 */
+import React from 'react';
+import { connect } from 'react-redux';
+import Channels from './Channels';
+import Chat from './Chat';
+import getModal from './modals';
 
-
-
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ ui }) => {
   const props = {
-      showModal: state.ui.modal.show,
-      modalType: state.ui.modal.type
-  }
-  return props
-}
+    showModal: ui.modal.show,
+    modalType: ui.modal.type,
+  };
+  return props;
+};
 
-class App extends React.Component {
+const App = ({ modalType, showModal }) => {
+  const Modal = getModal(modalType);
 
-  render() {
-    const { modalType, showModal } = this.props
-    const Modal = getModal(modalType)
-    return (
-      <>
-        {showModal && <Modal />}
-        <div className="row h-100 pb-3">
-          <Channels />
-          <Chat />
-        </div>
-      </>
-    )
-  }
-}
+  return (
+    <>
+      {showModal && <Modal />}
+      <div className="row h-100 pb-3">
+        <Channels />
+        <Chat />
+      </div>
+    </>
+  );
+};
 
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps)(App);

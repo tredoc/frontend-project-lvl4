@@ -1,25 +1,39 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import _ from 'lodash'
+/* eslint react/prop-types: 0 */
+import React from 'react';
+import { connect } from 'react-redux';
 
-const mapStateToProps = (state) => {
-    const props = {
-        messagesList: state.messages,
-        channelId: state.channels.channelId
-    }
-    return props
-}
+const mapStateToProps = ({ channels: { channelId }, messages }) => {
+  const props = {
+    messagesList: messages.filter((message) => message.channelId === channelId),
+  };
+  return props;
+};
 
-const Messages = (props) => {
-    const {messagesList, channelId } = props
-    const messages = messagesList.filter(m => m.channelId === channelId)
-        .map(m => <div key={m.id}>{m.userName}: {m.text}</div>)
+const Message = ({ messageData }) => {
+  const { userName, text } = messageData;
+  return (
+    <div>
+      {userName}
+      :
+      {' '}
+      {text}
+    </div>
+  );
+};
 
-    return (
-        <div className="mb-5">
-            {messages}
-        </div>
-    )
-}
+const Messages = ({ messagesList }) => {
+  const messages = messagesList.map((message) => (
+    <Message
+      key={message.id}
+      messageData={message}
+    />
+  ));
 
-export default connect(mapStateToProps)(Messages)
+  return (
+    <div className="mb-5">
+      {messages}
+    </div>
+  );
+};
+
+export default connect(mapStateToProps)(Messages);
