@@ -1,20 +1,14 @@
 /* eslint react/prop-types: 0 */
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { hideModal } from '../../slices/uiSlice';
 import routes from '../../routes';
 
-const mapStateToProps = ({ ui }) => {
-  const props = {
-    showModal: ui.modal.show,
-    channelId: ui.modal.extra,
-  };
-  return props;
-};
-const Rename = (props) => {
-  const { showModal, channelId, dispatch } = props;
+const Rename = () => {
+  const dispatch = useDispatch();
+  const { show: showModal, extra: channelId } = useSelector(({ ui }) => ui.modal);
 
   const handleClose = () => {
     dispatch(hideModal());
@@ -48,4 +42,4 @@ const Rename = (props) => {
   );
 };
 
-export default connect(mapStateToProps)(Rename);
+export default Rename;

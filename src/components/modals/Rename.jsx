@@ -4,24 +4,16 @@ import { useFormik } from 'formik';
 import {
   Modal, Form, Button, FormGroup,
 } from 'react-bootstrap';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { hideModal } from '../../slices/uiSlice';
 import routes from '../../routes';
 import validationSchema from '../../utils/modalValidationSchema';
 
-const mapStateToProps = ({ ui, channels }) => {
-  const props = {
-    showModal: ui.modal.show,
-    channelId: ui.modal.extra,
-    channelsList: channels.channelsList,
-  };
-  return props;
-};
-const Rename = (props) => {
-  const {
-    showModal, channelId, channelsList, dispatch,
-  } = props;
+const Rename = () => {
+  const dispatch = useDispatch();
+  const { show: showModal, extra: channelId } = useSelector(({ ui }) => ui.modal);
+  const channelsList = useSelector(({ channels }) => channels.channelsList);
   const channelsNames = channelsList.map((channel) => channel.name);
 
   const handleClose = () => {
@@ -63,7 +55,7 @@ const Rename = (props) => {
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group>
-            <Form.Label>What`&apos;`s the new name for channel ?</Form.Label>
+            <Form.Label>What&apos;s the new name for channel ?</Form.Label>
             <Form.Control
               type="text"
               id="channelName"
@@ -91,4 +83,4 @@ const Rename = (props) => {
   );
 };
 
-export default connect(mapStateToProps)(Rename);
+export default Rename;

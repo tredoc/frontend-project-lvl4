@@ -1,7 +1,7 @@
 /* eslint react/prop-types: 0 */
 import React, { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 import {
   Form, Button, Row, Col,
@@ -9,15 +9,9 @@ import {
 import UserContext from '../userContext';
 import routes from '../routes';
 
-const mapStateToProps = ({ channels: { channelId } }) => {
-  const props = {
-    channelId,
-  };
-  return props;
-};
-
-const SendMessage = ({ channelId }) => {
+const SendMessage = () => {
   const userName = React.useContext(UserContext);
+  const channelId = useSelector(({ channels }) => channels.channelId);
 
   const inputRef = useRef();
   useEffect(() => {
@@ -93,4 +87,4 @@ const SendMessage = ({ channelId }) => {
   );
 };
 
-export default connect(mapStateToProps)(SendMessage);
+export default SendMessage;

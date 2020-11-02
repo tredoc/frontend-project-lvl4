@@ -1,21 +1,13 @@
 /* eslint react/prop-types: 0 */
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { ButtonGroup, Dropdown, Button } from 'react-bootstrap';
 import { selectChannel, showModal } from '../slices';
 
-const mapStateToProps = ({ channels, ui }) => {
-  const props = {
-    channelsList: channels.channelsList,
-    channelId: channels.channelId,
-    showModal: ui.showModal,
-  };
-  return props;
-};
-
 const Channel = (props) => {
-  const { channelId, channelData, dispatch } = props;
+  const dispatch = useDispatch();
+  const { channelId, channelData } = props;
   const { id, name, removable } = channelData;
 
   const chatSelectHandler = (selectedChannelId) => {
@@ -58,8 +50,9 @@ const Channel = (props) => {
   );
 };
 
-const Channels = (props) => {
-  const { dispatch, channelId, channelsList } = props;
+const Channels = () => {
+  const dispatch = useDispatch();
+  const { channelId, channelsList } = useSelector(({ channels }) => channels);
 
   const addChannelHandler = () => {
     dispatch(showModal({ modalType: 'adding' }));
@@ -87,4 +80,4 @@ const Channels = (props) => {
   );
 };
 
-export default connect(mapStateToProps)(Channels);
+export default Channels;

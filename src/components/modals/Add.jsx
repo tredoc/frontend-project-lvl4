@@ -2,21 +2,16 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import { Modal, Form, Button } from 'react-bootstrap';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { hideModal } from '../../slices';
 import routes from '../../routes';
 import validationSchema from '../../utils/modalValidationSchema';
 
-const mapStateToProps = ({ channels, ui }) => {
-  const props = {
-    showModal: ui.modal.show,
-    channelsList: channels.channelsList,
-  };
-  return props;
-};
-const Add = (props) => {
-  const { showModal, channelsList, dispatch } = props;
+const Add = () => {
+  const dispatch = useDispatch();
+  const showModal = useSelector(({ ui }) => ui.modal.show);
+  const channelsList = useSelector(({ channels }) => channels.channelsList);
   const channelsNames = channelsList.map((channel) => channel.name);
 
   const handleClose = () => {
@@ -56,7 +51,7 @@ const Add = (props) => {
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group>
-            <Form.Label>What`&apos;`s the name for a new channel ?</Form.Label>
+            <Form.Label>What&apos;s the name for a new channel ?</Form.Label>
             <Form.Control
               type="text"
               id="channelName"
@@ -84,4 +79,4 @@ const Add = (props) => {
   );
 };
 
-export default connect(mapStateToProps)(Add);
+export default Add;

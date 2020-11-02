@@ -1,19 +1,12 @@
 /* eslint react/prop-types: 0 */
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Channels from './Channels';
 import Chat from './Chat';
 import getModal from './modals';
 
-const mapStateToProps = ({ ui }) => {
-  const props = {
-    showModal: ui.modal.show,
-    modalType: ui.modal.type,
-  };
-  return props;
-};
-
-const App = ({ modalType, showModal }) => {
+const App = () => {
+  const { show: showModal, type: modalType } = useSelector(({ ui }) => ui.modal);
   const Modal = getModal(modalType);
 
   return (
@@ -27,4 +20,4 @@ const App = ({ modalType, showModal }) => {
   );
 };
 
-export default connect(mapStateToProps)(App);
+export default App;

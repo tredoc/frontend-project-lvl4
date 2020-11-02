@@ -1,13 +1,6 @@
 /* eslint react/prop-types: 0 */
 import React from 'react';
-import { connect } from 'react-redux';
-
-const mapStateToProps = ({ channels: { channelId }, messages }) => {
-  const props = {
-    messagesList: messages.filter((message) => message.channelId === channelId),
-  };
-  return props;
-};
+import { useSelector } from 'react-redux';
 
 const Message = ({ messageData }) => {
   const { userName, text } = messageData;
@@ -21,13 +14,17 @@ const Message = ({ messageData }) => {
   );
 };
 
-const Messages = ({ messagesList }) => {
-  const messages = messagesList.map((message) => (
-    <Message
-      key={message.id}
-      messageData={message}
-    />
-  ));
+const Messages = () => {
+  const messagesList = useSelector(({ messages }) => messages);
+  const channelId = useSelector(({ channels }) => channels.channelId);
+  const messages = messagesList
+    .filter((message) => message.channelId === channelId)
+    .map((message) => (
+      <Message
+        key={message.id}
+        messageData={message}
+      />
+    ));
 
   return (
     <div className="mb-5">
@@ -36,4 +33,4 @@ const Messages = ({ messagesList }) => {
   );
 };
 
-export default connect(mapStateToProps)(Messages);
+export default Messages;
