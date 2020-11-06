@@ -6,13 +6,12 @@ import {
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import { withNamespaces } from 'react-i18next';
 import { hideModal } from '../../slices/uiSlice';
 import routes from '../../routes';
 import validationSchema from '../../utils/modalValidationSchema';
-import { withNamespaces } from 'react-i18next';
 
 const Rename = ({ t }) => {
-  console.log(t)
   const dispatch = useDispatch();
   const { show: showModal, extra: channelId } = useSelector(({ ui }) => ui.modal);
   const channelsList = useSelector(({ channels }) => channels.channelsList);
@@ -51,13 +50,13 @@ const Rename = ({ t }) => {
   return (
     <Modal show={showModal} onHide={handleClose} backdrop="static">
       <Modal.Header closeButton>
-      <Modal.Title>{t('modal.renaming channel')}</Modal.Title>
+        <Modal.Title>{t('modal.renaming channel')}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group>
-          <Form.Label>{t('modal.renamingChannel name')}</Form.Label>
+            <Form.Label>{t('modal.renamingChannel name')}</Form.Label>
             <Form.Control
               type="text"
               id="channelName"
@@ -67,7 +66,7 @@ const Rename = ({ t }) => {
             />
             {errors.channelName && touched.channelName && (
             <p className="text-danger">
-              {errors.channelName}
+              {t(`errors.${errors.channelName}`)}
             </p>
             )}
           </Form.Group>

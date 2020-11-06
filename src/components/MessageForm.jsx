@@ -6,9 +6,10 @@ import axios from 'axios';
 import {
   Form, Button, Row, Col,
 } from 'react-bootstrap';
+import { withNamespaces } from 'react-i18next';
 import UserContext from '../userContext';
 import routes from '../routes';
-import { withNamespaces } from 'react-i18next';
+import validationSchema from '../utils/messageValidationSchema';
 
 const MessageForm = ({ t }) => {
   const userName = React.useContext(UserContext);
@@ -21,9 +22,6 @@ const MessageForm = ({ t }) => {
 
   const onSubmit = async (values, { resetForm, setErrors }) => {
     const message = { text: values.message, userName, channelId };
-    if (values.message.trim().length === 0) {
-      return;
-    }
 
     const { channelMessagesPath } = routes;
     try {
@@ -44,11 +42,12 @@ const MessageForm = ({ t }) => {
     initialValues: {
       message: '',
     },
+    validationSchema: validationSchema(),
     onSubmit,
   });
 
   const {
-    isSubmitting, errors, handleSubmit, handleChange, values,
+    isSubmitting, errors, handleSubmit, handleChange, values, touched,
   } = formik;
 
   return (
@@ -81,7 +80,14 @@ const MessageForm = ({ t }) => {
       </Form.Row>
       <Row>
         <Col lg={10} className="text-danger">
-          {errors.network && t(`errors.${errors.network}`)}
+          {errors.message && touched.message && (
+            <p className="text-danger">
+              {t(`errors.${errors.message}`)}
+            </p>
+          )}
+          <p className="text-danger">
+            {errors.network && t(`errors.${errors.network}`)}
+          </p>
         </Col>
       </Row>
     </Form>

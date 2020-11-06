@@ -20,6 +20,8 @@
     "toLong": "Max lenggth is 20 symbols",
     "required": "You should write some...",
     "channelExists": "Channel with this name already exists",
-    "Network Error": "Network Error, please wait"
+    "Network Error": "Network Error, please wait",
+    "toLongMessage": "Message length is bigger then 255 symbols",
+    "requiredMessage": "You cant send empty message"
   }
 }

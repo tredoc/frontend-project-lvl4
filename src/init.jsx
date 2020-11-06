@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import './i18n'
+import './i18n';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import '../assets/application.scss';
@@ -19,8 +19,10 @@ import rootReducer, {
 const initApp = (initialData, socket) => {
   const userName = cookies.get('userName') || faker.name.findName();
   cookies.set('userName', userName);
-  
+
   const middleware = getDefaultMiddleware({
+    immutableCheck: true,
+    serializableCheck: true,
     thunk: true,
   });
 

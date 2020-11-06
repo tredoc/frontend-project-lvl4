@@ -2,9 +2,9 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { ButtonGroup, Dropdown, Button } from 'react-bootstrap';
+import { withNamespaces } from 'react-i18next';
 import { selectChannel, showModal } from '../slices';
 import i18n from '../i18n';
-import { withNamespaces } from 'react-i18next';
 
 const Channel = (props) => {
   const dispatch = useDispatch();
@@ -54,14 +54,13 @@ const Channel = (props) => {
 const Channels = ({ t }) => {
   const dispatch = useDispatch();
   const { channelId, channelsList } = useSelector(({ channels }) => channels);
-
   const addChannelHandler = () => {
     dispatch(showModal({ modalType: 'adding' }));
   };
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
-  }
+  };
 
   const channels = channelsList.map((channel) => (
     <Channel
@@ -73,27 +72,33 @@ const Channels = ({ t }) => {
     />
   ));
 
+  const { language } = i18n;
+
   return (
     <div className="mr-3 col-3 border-right">
       <div className="d-flex justify-content-between">
-      <h3>{t('channelsList')}</h3>
+        <h3>{t('channelsList')}</h3>
         <button type="button" onClick={addChannelHandler} className="btn btn-link">+</button>
       </div>
       <ul className="nav flex-column">
         {channels}
       </ul>
-      <button 
-        type="button" 
-        className="btn btn-link" 
-        onClick={() => changeLanguage('ru')}>
+      <ButtonGroup className="w-100">
+        <Button
+          size="sm"
+          variant={language === 'ru' ? 'primary' : 'light'}
+          onClick={() => changeLanguage('ru')}
+        >
           ru
-      </button>
-      <button 
-        type="button" 
-        className="btn btn-link"
-        onClick={() => changeLanguage('en')}>
+        </Button>
+        <Button
+          size="sm"
+          variant={language === 'en' ? 'primary' : 'light'}
+          onClick={() => changeLanguage('en')}
+        >
           en
-      </button>
+        </Button>
+      </ButtonGroup>
     </div>
   );
 };

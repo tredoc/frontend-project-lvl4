@@ -4,10 +4,10 @@ import { useFormik } from 'formik';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import { withNamespaces } from 'react-i18next';
 import { hideModal } from '../../slices';
 import routes from '../../routes';
 import validationSchema from '../../utils/modalValidationSchema';
-import { withNamespaces } from 'react-i18next';
 
 const Add = ({ t }) => {
   const dispatch = useDispatch();
@@ -46,13 +46,13 @@ const Add = ({ t }) => {
   return (
     <Modal show={showModal} onHide={handleClose} backdrop="static">
       <Modal.Header closeButton>
-      <Modal.Title>{t('modal.adding channel')}</Modal.Title>
+        <Modal.Title>{t('modal.adding channel')}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group>
-          <Form.Label>{t('modal.addingChannel name')}</Form.Label>
+            <Form.Label>{t('modal.addingChannel name')}</Form.Label>
             <Form.Control
               type="text"
               id="channelName"
@@ -62,7 +62,7 @@ const Add = ({ t }) => {
             />
             {errors.channelName && touched.channelName && (
             <p className="text-danger">
-              {errors.channelName}
+              {t(`errors.${errors.channelName}`)}
             </p>
             )}
           </Form.Group>

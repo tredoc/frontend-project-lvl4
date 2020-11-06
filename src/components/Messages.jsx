@@ -18,7 +18,7 @@ const Messages = () => {
   const channelId = useSelector(({ channels }) => channels.channelId);
   const messagesList = useSelector(({ messages }) => messages
     .filter((message) => message.channelId === channelId));
-  
+
   const messages = messagesList
     .map((message) => (
       <Message
