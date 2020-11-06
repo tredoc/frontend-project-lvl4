@@ -15,10 +15,11 @@ const Message = ({ messageData }) => {
 };
 
 const Messages = () => {
-  const messagesList = useSelector(({ messages }) => messages);
   const channelId = useSelector(({ channels }) => channels.channelId);
+  const messagesList = useSelector(({ messages }) => messages
+    .filter((message) => message.channelId === channelId));
+  
   const messages = messagesList
-    .filter((message) => message.channelId === channelId)
     .map((message) => (
       <Message
         key={message.id}

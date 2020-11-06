@@ -3,25 +3,24 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
+import './i18n'
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import '../assets/application.scss';
-import Cookies from 'js-cookie';
+import cookies from 'js-cookie';
 import faker from 'faker';
 
 import App from './components/App';
 import UserContext from './userContext';
 import rootReducer, {
-  addMessage, removeMessages, addChannel, removeChannel, renameChannel,
+  addMessage, addChannel, removeChannel, renameChannel,
 } from './slices';
 
-const userName = Cookies.get('userName') || faker.name.findName();
-Cookies.set('userName', userName);
-
 const initApp = (initialData, socket) => {
+  const userName = cookies.get('userName') || faker.name.findName();
+  cookies.set('userName', userName);
+  
   const middleware = getDefaultMiddleware({
-    immutableCheck: false,
-    serializableCheck: false,
     thunk: true,
   });
 
@@ -43,10 +42,7 @@ const initApp = (initialData, socket) => {
 
   socket.on('newMessage', ({ data: { attributes } }) => store.dispatch(addMessage(attributes)));
   socket.on('newChannel', ({ data: { attributes } }) => store.dispatch(addChannel(attributes)));
-  socket.on('removeChannel', ({ data: { id } }) => {
-    store.dispatch(removeChannel(id));
-    store.dispatch(removeMessages(id));
-  });
+  socket.on('removeChannel', ({ data: { id } }) => store.dispatch(removeChannel(id)));
   socket.on('renameChannel', ({ data: { attributes } }) => store.dispatch(renameChannel(attributes)));
 
   ReactDOM.render(

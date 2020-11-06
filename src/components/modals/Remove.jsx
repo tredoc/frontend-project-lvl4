@@ -5,8 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { hideModal } from '../../slices/uiSlice';
 import routes from '../../routes';
+import { withNamespaces } from 'react-i18next';
 
-const Rename = () => {
+const Rename = ({ t }) => {
   const dispatch = useDispatch();
   const { show: showModal, extra: channelId } = useSelector(({ ui }) => ui.modal);
 
@@ -27,19 +28,19 @@ const Rename = () => {
   return (
     <Modal show={showModal} onHide={handleClose} backdrop="static">
       <Modal.Header closeButton>
-        <Modal.Title>Remove channel?</Modal.Title>
+      <Modal.Title>{t('modal.removing channel')}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body className="d-flex justify-content-between">
         <Button onClick={handleClose} variant="secondary" type="reset">
-          Cancel
+        {t('modal.cancelBtn')}
         </Button>
         <Button onClick={handleRemove} variant="danger" type="submit">
-          Confirm
+        {t('modal.confirmBtn')}
         </Button>
       </Modal.Body>
     </Modal>
   );
 };
 
-export default Rename;
+export default withNamespaces()(Rename);

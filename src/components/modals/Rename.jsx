@@ -9,8 +9,10 @@ import axios from 'axios';
 import { hideModal } from '../../slices/uiSlice';
 import routes from '../../routes';
 import validationSchema from '../../utils/modalValidationSchema';
+import { withNamespaces } from 'react-i18next';
 
-const Rename = () => {
+const Rename = ({ t }) => {
+  console.log(t)
   const dispatch = useDispatch();
   const { show: showModal, extra: channelId } = useSelector(({ ui }) => ui.modal);
   const channelsList = useSelector(({ channels }) => channels.channelsList);
@@ -49,13 +51,13 @@ const Rename = () => {
   return (
     <Modal show={showModal} onHide={handleClose} backdrop="static">
       <Modal.Header closeButton>
-        <Modal.Title>Renaming channel</Modal.Title>
+      <Modal.Title>{t('modal.renaming channel')}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group>
-            <Form.Label>What&apos;s the new name for channel ?</Form.Label>
+          <Form.Label>{t('modal.renamingChannel name')}</Form.Label>
             <Form.Control
               type="text"
               id="channelName"
@@ -71,10 +73,10 @@ const Rename = () => {
           </Form.Group>
           <FormGroup className="d-flex justify-content-between">
             <Button onClick={handleClose} variant="secondary" type="reset">
-              Cancel
+              {t('modal.cancelBtn')}
             </Button>
             <Button variant="primary" type="submit">
-              Rename
+              {t('modal.renameBtn')}
             </Button>
           </FormGroup>
         </Form>
@@ -83,4 +85,4 @@ const Rename = () => {
   );
 };
 
-export default Rename;
+export default withNamespaces()(Rename);

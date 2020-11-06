@@ -1,13 +1,14 @@
 /* eslint react/prop-types: 0 */
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
 import { ButtonGroup, Dropdown, Button } from 'react-bootstrap';
 import { selectChannel, showModal } from '../slices';
+import i18n from '../i18n';
+import { withNamespaces } from 'react-i18next';
 
 const Channel = (props) => {
   const dispatch = useDispatch();
-  const { channelId, channelData } = props;
+  const { channelId, channelData, t } = props;
   const { id, name, removable } = channelData;
 
   const chatSelectHandler = (selectedChannelId) => {
@@ -42,15 +43,15 @@ const Channel = (props) => {
 
         <Dropdown.Toggle split variant="light" id="dropdown-split-basic" />
         <Dropdown.Menu>
-          <Dropdown.Item onClick={() => renameHandler(id)}>Rename</Dropdown.Item>
-          <Dropdown.Item onClick={() => deleteHandler(id)}>Delete</Dropdown.Item>
+          <Dropdown.Item onClick={() => renameHandler(id)}>{t('rename')}</Dropdown.Item>
+          <Dropdown.Item onClick={() => deleteHandler(id)}>{t('delete')}</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     </li>
   );
 };
 
-const Channels = () => {
+const Channels = ({ t }) => {
   const dispatch = useDispatch();
   const { channelId, channelsList } = useSelector(({ channels }) => channels);
 
@@ -58,26 +59,43 @@ const Channels = () => {
     dispatch(showModal({ modalType: 'adding' }));
   };
 
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  }
+
   const channels = channelsList.map((channel) => (
     <Channel
       channelData={channel}
       channelId={channelId}
       dispatch={dispatch}
       key={channel.id}
+      t={t}
     />
   ));
 
   return (
     <div className="mr-3 col-3 border-right">
       <div className="d-flex justify-content-between">
-        <h3>Channels</h3>
+      <h3>{t('channelsList')}</h3>
         <button type="button" onClick={addChannelHandler} className="btn btn-link">+</button>
       </div>
       <ul className="nav flex-column">
         {channels}
       </ul>
+      <button 
+        type="button" 
+        className="btn btn-link" 
+        onClick={() => changeLanguage('ru')}>
+          ru
+      </button>
+      <button 
+        type="button" 
+        className="btn btn-link"
+        onClick={() => changeLanguage('en')}>
+          en
+      </button>
     </div>
   );
 };
 
-export default Channels;
+export default withNamespaces()(Channels);

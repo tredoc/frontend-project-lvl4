@@ -7,8 +7,9 @@ import axios from 'axios';
 import { hideModal } from '../../slices';
 import routes from '../../routes';
 import validationSchema from '../../utils/modalValidationSchema';
+import { withNamespaces } from 'react-i18next';
 
-const Add = () => {
+const Add = ({ t }) => {
   const dispatch = useDispatch();
   const showModal = useSelector(({ ui }) => ui.modal.show);
   const channelsList = useSelector(({ channels }) => channels.channelsList);
@@ -45,13 +46,13 @@ const Add = () => {
   return (
     <Modal show={showModal} onHide={handleClose} backdrop="static">
       <Modal.Header closeButton>
-        <Modal.Title>Adding channel</Modal.Title>
+      <Modal.Title>{t('modal.adding channel')}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group>
-            <Form.Label>What&apos;s the name for a new channel ?</Form.Label>
+          <Form.Label>{t('modal.addingChannel name')}</Form.Label>
             <Form.Control
               type="text"
               id="channelName"
@@ -67,10 +68,10 @@ const Add = () => {
           </Form.Group>
           <Form.Group className="d-flex justify-content-between">
             <Button onClick={handleClose} variant="secondary" type="reset">
-              Cancel
+              {t('modal.cancelBtn')}
             </Button>
             <Button variant="primary" type="submit">
-              Add
+              {t('modal.addBtn')}
             </Button>
           </Form.Group>
         </Form>
@@ -79,4 +80,4 @@ const Add = () => {
   );
 };
 
-export default Add;
+export default withNamespaces()(Add);

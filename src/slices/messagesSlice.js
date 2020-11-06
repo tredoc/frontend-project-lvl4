@@ -1,6 +1,7 @@
 // https://redux-toolkit.js.org/tutorials/intermediate-tutorial#writing-the-slice-reducer
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
+import { removeChannel } from './channelsSlice';
 
 const messagesSlice = createSlice({
   name: 'messages',
@@ -8,15 +9,16 @@ const messagesSlice = createSlice({
   reducers: {
     addMessage(state, { payload }) {
       const addedMessage = payload;
-      return [...state, addedMessage];
+      state.push(addedMessage)
     },
-    removeMessages(state, { payload }) {
-      state = state.filter((message) => message.channelId !== payload);
-      return state;
-    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(removeChannel, (state, { payload }) => {
+      return state.filter((message) => message.channelId !== payload);
+    })
   },
 });
 
-export const { addMessage, removeMessages } = messagesSlice.actions;
+export const { addMessage } = messagesSlice.actions;
 
 export default messagesSlice.reducer;

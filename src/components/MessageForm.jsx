@@ -8,8 +8,9 @@ import {
 } from 'react-bootstrap';
 import UserContext from '../userContext';
 import routes from '../routes';
+import { withNamespaces } from 'react-i18next';
 
-const SendMessage = () => {
+const MessageForm = ({ t }) => {
   const userName = React.useContext(UserContext);
   const channelId = useSelector(({ channels }) => channels.channelId);
 
@@ -63,7 +64,7 @@ const SendMessage = () => {
             type="text"
             id="message"
             name="message"
-            placeholder="write here"
+            placeholder={t('typeHere')}
             ref={inputRef}
           />
         </Col>
@@ -74,17 +75,17 @@ const SendMessage = () => {
             variant="primary"
             type="submit"
           >
-            Send
+            {t('send')}
           </Button>
         </Col>
       </Form.Row>
       <Row>
         <Col lg={10} className="text-danger">
-          {errors.network}
+          {errors.network && t(`errors.${errors.network}`)}
         </Col>
       </Row>
     </Form>
   );
 };
 
-export default SendMessage;
+export default withNamespaces()(MessageForm);

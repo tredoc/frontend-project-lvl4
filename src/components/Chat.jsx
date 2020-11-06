@@ -1,11 +1,11 @@
 import React from 'react';
 import Messages from './Messages';
-import SendMessage from './SendMessage';
+import MessageFrom from './MessageForm';
 
 const Chat = () => (
   <div className="message-window col h-100 border-right d-flex flex-column justify-content-between">
     <Messages />
-    <SendMessage />
+    <MessageFrom />
   </div>
 );
 

@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import messagesReducer, { addMessage, removeMessages } from './messagesSlice';
+import messagesReducer, { addMessage } from './messagesSlice';
 import channelsReducer, {
   addChannel, removeChannel, renameChannel, selectChannel,
 } from './channelsSlice';
@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
   ui: uiReducer,
 });
 
-export { addMessage, removeMessages };
+export { addMessage };
 export {
   addChannel, removeChannel, renameChannel, selectChannel,
 };
