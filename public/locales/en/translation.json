@@ -5,23 +5,24 @@
   "typeHere": "type message",
   "send": "Send",
   "modal": {
-    "adding channel": "Adding channel",
-    "renaming channel": "Renaming channel",
-    "removing channel": "Remove channel ?",
-    "addingChannel name": "What's the name for a new channel ?",
-    "renamingChannel name": "What's the new name for channel ?",
+    "addingChannel": "Adding channel",
+    "renamingChannel": "Renaming channel",
+    "removingChannel": "Remove channel ?",
+    "addingChannelName": "What's the name for a new channel ?",
+    "renamingChannelName": "What's the new name for channel ?",
     "cancelBtn": "Cancel",
     "renameBtn": "Rename",
     "confirmBtn": "Confirm",
     "addBtn": "Add"
   },
   "errors": {
-    "toShort": "Min length is 3 symbols",
-    "toLong": "Max lenggth is 20 symbols",
+    "fieldTooShort": "Min length is 3 symbols",
+    "fieldTooBig": "Max lenggth is 20 symbols",
     "required": "You should write some...",
     "channelExists": "Channel with this name already exists",
     "Network Error": "Network Error, please wait",
     "toLongMessage": "Message length is bigger then 255 symbols",
-    "requiredMessage": "You cant send empty message"
+    "requiredMessage": "You cant send empty message",
+    "fieldInvalid": "Smth went wrong, take care..."
   }
 }

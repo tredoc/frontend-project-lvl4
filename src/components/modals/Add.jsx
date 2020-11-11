@@ -46,13 +46,13 @@ const Add = ({ t }) => {
   return (
     <Modal show={showModal} onHide={handleClose} backdrop="static">
       <Modal.Header closeButton>
-        <Modal.Title>{t('modal.adding channel')}</Modal.Title>
+        <Modal.Title>{t('modal.addingСhannel')}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group>
-            <Form.Label>{t('modal.addingChannel name')}</Form.Label>
+            <Form.Label>{t('modal.addingChannelName')}</Form.Label>
             <Form.Control
               type="text"
               id="channelName"
@@ -62,7 +62,7 @@ const Add = ({ t }) => {
             />
             {errors.channelName && touched.channelName && (
             <p className="text-danger">
-              {t(`errors.${errors.channelName}`)}
+              {errors.channelName}
             </p>
             )}
           </Form.Group>

@@ -82,11 +82,11 @@ const MessageForm = ({ t }) => {
         <Col lg={10} className="text-danger">
           {errors.message && touched.message && (
             <p className="text-danger">
-              {t(`errors.${errors.message}`)}
+              {errors.message}
             </p>
           )}
           <p className="text-danger">
-            {errors.network && t(`errors.${errors.network}`)}
+            {errors.network && errors.network}
           </p>
         </Col>
       </Row>

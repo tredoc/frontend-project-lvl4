@@ -28,7 +28,7 @@ const Rename = ({ t }) => {
   return (
     <Modal show={showModal} onHide={handleClose} backdrop="static">
       <Modal.Header closeButton>
-        <Modal.Title>{t('modal.removing channel')}</Modal.Title>
+        <Modal.Title>{t('modal.removingChannel')}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body className="d-flex justify-content-between">

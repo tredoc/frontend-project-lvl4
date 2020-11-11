@@ -5,23 +5,24 @@
   "typeHere": "текст сообщения",
   "send": "Отправить",
   "modal": {
-    "adding channel": "Добавить канал",
-    "renaming channel": "Переименовать канал",
-    "removing channel": "Удалить канал ?",
-    "addingChannel name": "Как назовем новый канал ?",
-    "renamingChannel name": "Как переименуем канал ?",
+    "addingChannel": "Добавить канал",
+    "renamingChannel": "Переименовать канал",
+    "removingChannel": "Удалить канал ?",
+    "addingChannelName": "Как назовем новый канал ?",
+    "renamingChannelName": "Как переименуем канал ?",
     "cancelBtn": "Отмена",
     "renameBtn": "Переименовать",
     "confirmBtn": "Подтвердить",
     "addBtn": "Добавить"
   },
   "errors": {
-    "toShort": "Минимальная длинна 3 символа",
-    "toLong": "Максимальная длинна 20 символов",
+    "fieldTooShort": "Минимальная длинна 3 символа",
+    "fieldTooBig": "Максимальная длинна 20 символов",
     "required": "Это поле обязательное к заполнению",
     "channelExists": "Канал с таким именем уже существует",
     "Network Error": "Проблемы с сетью. Подождите...",
     "toLongMessage": "Длинна сообщения превышает 255 символов",
-    "requiredMessage": "Вы не можете отправить пустое сообщение"
+    "requiredMessage": "Вы не можете отправить пустое сообщение",
+    "fieldInvalid": "Что-то пошло не так..."
   }
 }

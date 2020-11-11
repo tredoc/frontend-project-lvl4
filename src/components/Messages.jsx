@@ -1,6 +1,7 @@
 /* eslint react/prop-types: 0 */
 import React from 'react';
 import { useSelector } from 'react-redux';
+import getChannelMessages from '../utils';
 
 const Message = ({ messageData }) => {
   const { userName, text } = messageData;
@@ -15,9 +16,7 @@ const Message = ({ messageData }) => {
 };
 
 const Messages = () => {
-  const channelId = useSelector(({ channels }) => channels.channelId);
-  const messagesList = useSelector(({ messages }) => messages
-    .filter((message) => message.channelId === channelId));
+  const messagesList = useSelector(getChannelMessages);
 
   const messages = messagesList
     .map((message) => (

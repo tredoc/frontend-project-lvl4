@@ -58,7 +58,7 @@ const Channels = ({ t }) => {
     dispatch(showModal({ modalType: 'adding' }));
   };
 
-  const changeLanguage = (lng) => {
+  const setLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };
 
@@ -87,14 +87,14 @@ const Channels = ({ t }) => {
         <Button
           size="sm"
           variant={language === 'ru' ? 'primary' : 'light'}
-          onClick={() => changeLanguage('ru')}
+          onClick={() => setLanguage('ru')}
         >
           ru
         </Button>
         <Button
           size="sm"
           variant={language === 'en' ? 'primary' : 'light'}
-          onClick={() => changeLanguage('en')}
+          onClick={() => setLanguage('en')}
         >
           en
         </Button>
