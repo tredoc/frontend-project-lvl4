@@ -10,11 +10,12 @@ import { withNamespaces } from 'react-i18next';
 import { hideModal } from '../../slices/uiSlice';
 import routes from '../../routes';
 import validationSchema from '../../utils/modalValidationSchema';
+import { getModalUi, getChannelsList } from '../../selectors';
 
 const Rename = ({ t }) => {
   const dispatch = useDispatch();
-  const { show: showModal, extra: channelId } = useSelector(({ ui }) => ui.modal);
-  const channelsList = useSelector(({ channels }) => channels.channelsList);
+  const { show: showModal, extra: channelId } = useSelector(getModalUi);
+  const channelsList = useSelector(getChannelsList);
   const channelsNames = channelsList.map((channel) => channel.name);
 
   const handleClose = () => {

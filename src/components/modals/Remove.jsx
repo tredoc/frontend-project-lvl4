@@ -6,10 +6,11 @@ import axios from 'axios';
 import { withNamespaces } from 'react-i18next';
 import { hideModal } from '../../slices/uiSlice';
 import routes from '../../routes';
+import { getModalUi } from '../../selectors';
 
 const Rename = ({ t }) => {
   const dispatch = useDispatch();
-  const { show: showModal, extra: channelId } = useSelector(({ ui }) => ui.modal);
+  const { show: showModal, extra: channelId } = useSelector(getModalUi);
 
   const handleClose = () => {
     dispatch(hideModal());

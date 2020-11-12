@@ -10,10 +10,11 @@ import { withNamespaces } from 'react-i18next';
 import UserContext from '../userContext';
 import routes from '../routes';
 import validationSchema from '../utils/messageValidationSchema';
+import { getCurrentChannelId } from '../selectors';
 
 const MessageForm = ({ t }) => {
   const userName = React.useContext(UserContext);
-  const channelId = useSelector(({ channels }) => channels.channelId);
+  const channelId = useSelector(getCurrentChannelId);
 
   const inputRef = useRef();
   useEffect(() => {

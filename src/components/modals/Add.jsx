@@ -7,12 +7,13 @@ import axios from 'axios';
 import { withNamespaces } from 'react-i18next';
 import { hideModal } from '../../slices';
 import routes from '../../routes';
+import { getChannelsList, getIsModalShown } from '../../selectors';
 import validationSchema from '../../utils/modalValidationSchema';
 
 const Add = ({ t }) => {
   const dispatch = useDispatch();
-  const showModal = useSelector(({ ui }) => ui.modal.show);
-  const channelsList = useSelector(({ channels }) => channels.channelsList);
+  const isModalShown = useSelector(getIsModalShown);
+  const channelsList = useSelector(getChannelsList);
   const channelsNames = channelsList.map((channel) => channel.name);
 
   const handleClose = () => {
@@ -44,7 +45,7 @@ const Add = ({ t }) => {
   } = formik;
 
   return (
-    <Modal show={showModal} onHide={handleClose} backdrop="static">
+    <Modal show={isModalShown} onHide={handleClose} backdrop="static">
       <Modal.Header closeButton>
         <Modal.Title>{t('modal.addingСhannel')}</Modal.Title>
       </Modal.Header>

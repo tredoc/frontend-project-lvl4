@@ -5,6 +5,7 @@ import { ButtonGroup, Dropdown, Button } from 'react-bootstrap';
 import { withNamespaces } from 'react-i18next';
 import { selectChannel, showModal } from '../slices';
 import i18n from '../i18n';
+import { getChannels } from '../selectors';
 
 const Channel = (props) => {
   const dispatch = useDispatch();
@@ -53,7 +54,7 @@ const Channel = (props) => {
 
 const Channels = ({ t }) => {
   const dispatch = useDispatch();
-  const { channelId, channelsList } = useSelector(({ channels }) => channels);
+  const { channelId, channelsList } = useSelector(getChannels);
   const addChannelHandler = () => {
     dispatch(showModal({ modalType: 'adding' }));
   };

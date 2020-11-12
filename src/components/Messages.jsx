@@ -1,7 +1,7 @@
 /* eslint react/prop-types: 0 */
 import React from 'react';
 import { useSelector } from 'react-redux';
-import getChannelMessages from '../utils';
+import { getChannelMessages } from '../selectors';
 
 const Message = ({ messageData }) => {
   const { userName, text } = messageData;
